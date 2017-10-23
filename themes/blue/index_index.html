@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>闭合标签</h1>
+{tree:close time='$demo_time'/}
+<hr>
+<h1>非闭合标签</h1>
+{tree:open name='demo_name'}
+{$key}=>{$demo_name}<br>
+{/tree:open}
+<br>
+{tree:open name='demo_name' type='1'}
+{$key}=>{$demo_name}<br>
+{/tree:open}
+<div id="msg" style="border: dotted 1px grey;width: 200px;height: 200px;color: blue">blue</div>
+</body>
+</html>
