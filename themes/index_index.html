@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../__PUBLIC__/static/js/jquery-3.2.1.min.js"></script>
+    <script src="../__PUBLIC__/static/js/jquery.validate.min.js"></script>
+
+</head>
+<body>
+<script>
+    console.log(document.location.href);
+</script>
+<form id="myForm" action="" method="post">
+    <input type="text" name="user_name" id="user_name" placeholder="用户名：">
+    <input type="text" name="user_password" id="user_password" placeholder="密码：">
+    <input type="submit" value="提交">
+</form>
+
+<script>
+
+    //自定义验证
+    $.validator.addMethod("phone", function (value, element, param) {
+        var rel = /^1[3458]\d{9}$/.test(value);
+        return rel;
+    }, "手机号不正确");
+
+    $().ready(function () {
+        $("#myForm").validate({
+            debug: true,
+            onkeyup: null,
+            rules: {
+                user_name: "required",
+                user_password: {
+                    required: true,
+                    rangelength: [3, 11],
+                    /* remote:{
+                         url:"",
+                         type:"post",
+                         dataType:"json",
+                         data:{
+                             username:function(){
+                                 return $("#user_name").val();
+                             }
+                         }
+                     },*/
+                    phone: true
+                }
+            },
+            messages: {
+                user_name: "请输入用户名",
+                user_password: {
+                    required: "密码不能为空",
+                    rangelength: $.validator.format("密码长度为：{3}-{5}之间"),
+                    remote: "密码未设置"
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.is(":text"))
+                    error.appendTo(element.parent().next().next());
+            },
+            success: function () {
+
+            }
+        });
+    });
+</script>
+</body>
+</html>
