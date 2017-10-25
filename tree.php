@@ -12,21 +12,29 @@ $test_data = [
     ['id' => 1, 'name' => 'a', 'pid' => 0],
     ['id' => 2, 'name' => 'b', 'pid' => 1],
     ['id' => 3, 'name' => 'c', 'pid' => 1],
-    ['id' => 4, 'name' => 'd', 'pid' => 0],
-    ['id' => 5, 'name' => 'e', 'pid' => 4],
+    ['id' => 4, 'name' => 'd', 'pid' => 5],
+    ['id' => 5, 'name' => 'e', 'pid' => 0],
+    ['id' => 6, 'name' => 'e', 'pid' => 4],
 ];
 function m_tree($arr, $pid = 0)
 {
     $tree = [];
-    foreach ($arr as $tmp) {
-        if (!isset($tmp['pid'])) {
-            $tree[] = $tmp;
-        } elseif($tmp['pid'] == $pid){
-        $tree[$pid][$tmp['id']] = $tmp;
-    } /*else {
-            if ($tmp['pid'] > $pid)
-                $tree[$pid][] = m_tree($arr, $tmp['pid']);
-        }*/
+    foreach ($arr as $t) {
+        if ($t['id'] == $pid) {
+            $tree = $t;
+        }
+    }
+    foreach ($arr as $child) {
+        if (isset($child['pid']) && $child['pid'] == $tree['id']) {
+            $tree['child'][] = $child;
+        }
+    }
+   foreach ($tree as $k1 => $v1) {
+        if (is_array($v1)) {
+            foreach ($v1 as $k2 => $v2) {
+               $tree['child'][$k2] = m_tree($arr, $v2['id']);
+            }
+        }
     }
     return $tree;
 }
