@@ -15,7 +15,7 @@ class ModuleTest
 {
     public function run()
     {
-        $arr = Config::get('template');
+       /* $arr = Config::get('template');
         $arr = array_merge($arr, [
             // 模板引擎类型 支持 php think 支持扩展
             'type' => 'Think',
@@ -35,6 +35,6 @@ class ModuleTest
             'taglib_end' => '}',
             //'taglib_pre_load' => 'app\common\Tree',
         ]);
-        Config::set(['template' => $arr]);
+        Config::set(['template' => $arr]);*/
     }
 }
