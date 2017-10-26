@@ -145,7 +145,7 @@ return [
     'view_replace_str' => [
         '__PUBLIC__' => 'public',
         '__ROOT__' => '/',
-        '__RELATIVE_PATH__' => './',
+        '__RELATIVE_PATH__' => $_SERVER["SCRIPT_NAME"] . '/..',
     ],
 
     // 默认跳转页面对应的模板文件

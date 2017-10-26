@@ -13,10 +13,13 @@ class Index extends Base
          *
          */
 
-        var_dump(getcwd());
+        /*
+         var_dump(getcwd());
         var_dump($_SERVER['PHP_SELF']);
         var_dump($_SERVER['DOCUMENT_ROOT']);
         var_dump(__DIR__);
+        var_dump($_SERVER['SCRIPT_NAME']);
+        */
 
 
         $this->assign('__LIST__', [1, 2, 3]);
