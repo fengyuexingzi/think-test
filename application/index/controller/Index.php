@@ -31,6 +31,16 @@ class Index extends Base
 
     public function tree()
     {
+        $arr = [];
+        $arr1 = [];
+        $arr2 = [];
+        $arr3 = ['king'=>'best'];
+        //$arr = array_merge($arr1, $arr2, $arr3);
+        var_dump($arr);
+    }
 
+    public function hello()
+    {
+        var_dump(input());
     }
 }
