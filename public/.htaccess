@@ -4,7 +4,7 @@
 
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule ^(.*)$ index.php?/$1 [QSA,PT]
+  RewriteRule ^(.*)$ index.php/$1 [QSA,PT]
 
   RewriteCond %{HTTP_USER_AGENT} Mobile* [NC]
   RewriteRule index.php mobile.php/$1 [QSA,PT,L]

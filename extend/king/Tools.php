@@ -9,7 +9,7 @@
 namespace king;
 class Tools
 {
-    function aes($data, $method = 'encrypt', $key = '', $iv = '')
+    public static function aes($data, $method = 'encrypt', $key = '', $iv = '')
     {
         $key = $key ?: 'cTFbUKEMWHzP4yeRWpaXZf98NLY902IkxJ4XOuQIq1c=';
         $iv = $iv ?: 'Bqa1wCAKcFwFMsYF';
@@ -21,7 +21,7 @@ class Tools
             return false;
     }
 
-    function uuid()
+    public static function uuid()
     {
         return bin2hex(openssl_random_pseudo_bytes(32));
     }

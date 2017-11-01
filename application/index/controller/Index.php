@@ -3,6 +3,8 @@
 namespace app\index\controller;
 
 use app\common\controller\Base;
+use Firebase\JWT\JWT;
+use king\Tools;
 
 class Index extends Base
 {
@@ -34,7 +36,7 @@ class Index extends Base
         $arr = [];
         $arr1 = [];
         $arr2 = [];
-        $arr3 = ['king'=>'best'];
+        $arr3 = ['king' => 'best'];
         //$arr = array_merge($arr1, $arr2, $arr3);
         var_dump($arr);
     }
@@ -47,5 +49,37 @@ class Index extends Base
             echo '<br/>';
         }
         return json_encode($this->request->method());
+    }
+
+    public function login()
+    {
+
+        if ($this->request->isPost()) {
+            $username = 'king';
+            $password = '123456';
+
+            $in_username = input('username', '', 'htmlspecialchars');
+            $in_password = input('password', '', 'htmlspecialchars');
+
+            if ($username == $in_username && $password == $in_password) {
+                $payload = [
+                    'exp' => time() + 3600,
+                    'iat' => time(),
+                    'jti' => Tools::aes($username),
+                ];
+                $privateKey = openssl_pkey_get_private(file_get_contents('../key/private.key'));
+                $token = JWT::encode($payload, $privateKey, 'RS256');
+                return $token;
+            }
+        }
+    }
+
+    public function info()
+    {
+        $token = getallheaders()['Authorization'];
+        $privateKey = openssl_pkey_get_private(file_get_contents('../key/private.key'));
+        $publicKey = openssl_get_publickey(file_get_contents('../key/public.key'));
+        var_dump(JWT::decode($token, $publicKey, ['RS256']));
+        var_dump(Tools::aes('it8jwp62HHlavuRM2trmIw==', 'decrypt'));
     }
 }
