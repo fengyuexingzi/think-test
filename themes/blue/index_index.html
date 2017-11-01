@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="__RELATIVE_PATH__/static/js/jquery-3.2.1.min.js"></script>
     <title>Title</title>
 </head>
 <body>
-<div><img src="__RELATIVE_PATH__/static/images/favicon.ico"></div>
+<div><img src="__RELATIVE_PATH__/static/images/favicon.ico" onclick="info()"></div>
 <h1>闭合标签</h1>
 {tree:close time='$demo_time'/}
 <hr>
@@ -18,5 +19,15 @@
 {$key}=>{$demo_name}<br>
 {/tree:open}
 <div id="msg" style="border: dotted 1px grey;width: 200px;height: 200px;color: blue">blue</div>
+<script>
+       function info() {
+           $.ajax({
+               url : 'http://localhost/think-test/public/index/index/tree',
+               method : 'get',
+               data : 'name=1&pass=2',
+               async:false
+           });
+       }
+</script>
 </body>
 </html>

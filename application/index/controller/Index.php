@@ -42,5 +42,10 @@ class Index extends Base
     public function hello()
     {
         var_dump(input());
+        if ($this->request->isAjax()) {
+            var_dump($this->request);
+            echo '<br/>';
+        }
+        return json_encode($this->request->method());
     }
 }
