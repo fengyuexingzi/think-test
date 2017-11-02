@@ -3,7 +3,7 @@
 namespace app\index\controller;
 
 use app\common\controller\Base;
-use Firebase\JWT\JWT;
+use JWT\JWT;
 use king\Tools;
 
 class Index extends Base
@@ -63,23 +63,41 @@ class Index extends Base
 
             if ($username == $in_username && $password == $in_password) {
                 $payload = [
-                    'exp' => time() + 3600,
+                    'exp' => time() + 30,
                     'iat' => time(),
                     'jti' => Tools::aes($username),
+                    'ver' => 1
                 ];
                 $privateKey = openssl_pkey_get_private(file_get_contents('../key/private.key'));
                 $token = JWT::encode($payload, $privateKey, 'RS256');
                 return $token;
+            } else {
+                return json_encode([
+                    'code' => '50001',
+                    'data' => '',
+                    'msg' => '用户名或密码错误',
+                ]);
             }
         }
     }
 
     public function info()
     {
+        error_reporting(0);
         $token = getallheaders()['Authorization'];
         $privateKey = openssl_pkey_get_private(file_get_contents('../key/private.key'));
         $publicKey = openssl_get_publickey(file_get_contents('../key/public.key'));
-        var_dump(JWT::decode($token, $publicKey, ['RS256']));
+
+            var_dump(JWT::decode($token, $publicKey, ['RS256']));
+           /* echo json_encode([
+                'code' => '50002',
+                'data' => [
+                    ['name' => 'a', 'sex' => 'b'],
+                    ['name' => 'a', 'sex' => 'b'],
+                ],
+                'msg' => $exception->getMessage()
+            ]);*/
+
         var_dump(Tools::aes('it8jwp62HHlavuRM2trmIw==', 'decrypt'));
     }
 }
