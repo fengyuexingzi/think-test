@@ -19,9 +19,10 @@ return [
     'new/:id' => [
         //'News/read?status=1&app_id=5',
         'News/read',
-        ['method' => 'get|post','ext' => 'shtml'],
+        ['method' => 'get|post', 'ext' => 'shtml'],
         ['id' => '\w+'],
     ],
+    'hi' => 'index/index/hello',
     '__pattern__' => [
         'name' => '\w+',
     ],
