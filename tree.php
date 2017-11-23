@@ -6,45 +6,56 @@
  * Time: 13:46
  */
 
-
-$test_data = [
-    ['id' => 0, 'name' => 'A'],
-    ['id' => 1, 'name' => 'a', 'pid' => 0],
-    ['id' => 2, 'name' => 'b', 'pid' => 1],
-    ['id' => 3, 'name' => 'c', 'pid' => 1],
-    ['id' => 4, 'name' => 'd', 'pid' => 5],
-    ['id' => 5, 'name' => 'e', 'pid' => 0],
-    ['id' => 6, 'name' => 'e', 'pid' => 4],
+$arr = [
+    ['id'=>1,'title'=>'first','pid'=>0,'level'=>1],
+    ['id'=>2,'title'=>'second','pid'=>0,'level'=>1],
+    ['id'=>3,'title'=>'third','pid'=>1,'level'=>2],
+    ['id'=>4,'title'=>'fourth','pid'=>1,'level'=>2],
+    ['id'=>5,'title'=>'fifth','pid'=>2,'level'=>2],
+    ['id'=>6,'title'=>'sixth','pid'=>3,'level'=>3],
+    ['id'=>7,'title'=>'seventh','pid'=>6,'level'=>4],
+    ['id'=>8,'title'=>'seventh','pid'=>7,'level'=>5],
+    ['id'=>9,'title'=>'seventh','pid'=>8,'level'=>6],
+    ['id'=>10,'title'=>'seventh','pid'=>8,'level'=>6],
+    ['id'=>11,'title'=>'seventh','pid'=>8,'level'=>6],
 ];
-function m_tree($arr, $pid = 0)
-{
-    $tree = [];
-    foreach ($arr as $t) {
-        if ($t['id'] == $pid) {
-            $tree = $t;
-        }
-    }
-    foreach ($arr as $child) {
-        if (isset($child['pid']) && $child['pid'] == $tree['id']) {
-            $tree['child'][] = $child;
-        }
-    }
-   foreach ($tree as $k1 => $v1) {
-        if (is_array($v1)) {
-            foreach ($v1 as $k2 => $v2) {
-               $tree['child'][$k2] = m_tree($arr, $v2['id']);
+
+function tree($arr, $pid = 0, $level = 1){
+    $child = [];
+    foreach($arr as $v){
+        // $child:孩子 $v:孩子的孩子 $childNodes:孩子的孩子的孩子，也就是说，在这个函数里，要处理子孙三代
+        if($v['pid'] == $pid){ 	// 得到子节点后递归得到子节点的子节点
+            $childNodes = tree($arr, $v['id'], $level + 1);  // get childNodes's childNodes
+            if($childNodes){
+                $v['child'] = $childNodes;
+                $v['level'] = $level;
             }
+            $child[] = $v;	// $v is $child's child
         }
     }
-    return $tree;
+    return $child;
 }
 
-echo '<pre>';
-print_r(m_tree($test_data));
-echo '</pre>';
-die;
+$tree = tree($arr,0);
 
-function tree($directory)
+function html($tree, $level = 0){
+    $str = '<ul>';
+    foreach($tree as $v){
+        if(isset($v['child'])){
+            $str .= "<li level=\"{$v['level']}\">{$v['title']}<ul>";
+            $str .= html($v['child']);
+            $str .= "</ul></li>";
+        }else{
+            $str .= "<li level=\"{$v['level']}\">{$v['title']}</li>";
+        }
+    }
+    return $str .= '</ul>';
+}
+
+html($tree);
+
+die;
+function file_tree($directory)
 {
     $mydir = dir($directory);
     echo "<ul>\n";
@@ -57,7 +68,7 @@ function tree($directory)
         if ((is_dir($child)) AND ($file != ".") AND ($file != "..") AND ($file != '$RECYCLE.BIN') AND ($file != 'System Volume Information')) {
             var_dump("directory: " . $child);
             echo "<li><font color=\"#ff00cc\"><b>$file</b></font></li>\n";
-            tree($child);
+            file_tree($child);
         } else
             echo "<li>$file</li>\n";
     }
@@ -70,7 +81,7 @@ function getChmod($filepath)
     return substr(base_convert(@fileperms($filepath), 10, 8), -4);
 }
 
-$dirs = tree('/');
+$dirs = file_tree('/');
 
 var_dump($dirs);
 
