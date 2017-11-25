@@ -22,6 +22,15 @@ return [
         'view' => ['index/index'],
     ],
 
+    // admin
+    'admin' => [
+        '__file__' => ['common.php'],
+        '__dir__' => ['common.php'],
+        'controller' => ['Index'],
+        'model' => [],
+        'view' => ['index/index']
+    ],
+
     // cli
     'cli' => [
         '__file__' => ['common.php'],

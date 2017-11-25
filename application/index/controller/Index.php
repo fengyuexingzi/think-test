@@ -100,4 +100,9 @@ class Index extends Base
 
         var_dump(Tools::aes('it8jwp62HHlavuRM2trmIw==', 'decrypt'));
     }
+
+    public function test()
+    {
+        echo md5(md5(md5(123456)) . 'CliDHObO');
+    }
 }
