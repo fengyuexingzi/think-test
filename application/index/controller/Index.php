@@ -103,6 +103,6 @@ class Index extends Base
 
     public function test()
     {
-        echo md5(md5(md5(123456)) . 'CliDHObO');
+        echo 'test';
     }
 }
