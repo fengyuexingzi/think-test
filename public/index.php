@@ -23,4 +23,4 @@ define('RELATIVE_PATH', dirname($_SERVER["SCRIPT_NAME"]));
 require __DIR__ . '/../thinkphp/start.php';
 
 //消除缓存
-clearTemp(RUNTIME_PATH);
+//clearTemp(RUNTIME_PATH);
