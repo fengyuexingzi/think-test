@@ -17,7 +17,7 @@ define('APP_PATH', __DIR__ . '/../application/');
 //html  localhost/think/public/favicon.ico
 //php   d:/www/think/public/extend.php
 //  相对路径时两者通用，但是 php 许多函数引入文件必须使用全路径 eg;(file_get_contents())
-define('RELATIVE_PATH', dirname($_SERVER["SCRIPT_NAME"]));
+//define('RELATIVE_PATH', dirname($_SERVER["SCRIPT_NAME"]));
 
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';
